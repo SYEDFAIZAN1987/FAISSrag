@@ -254,7 +254,7 @@ user_query = st.text_input(
     help="Type your question or click an example below",
     placeholder="Example: What are the key trends in housing stability?",
     value=st.session_state.current_question,
-    key="user_input"
+    key="unique_user_input_key"  # Assign a unique key
 )
 
 # Example questions as buttons
@@ -268,8 +268,10 @@ example_questions = [
 st.markdown("### 💡 Example Questions")
 cols = st.columns(2)
 for idx, question in enumerate(example_questions):
-    if cols[idx % 2].button(question, key=f"example_{idx}", on_click=set_example_question, args=(question,)):
-        pass
+    # Assign a unique key for each button
+    if cols[idx % 2].button(question, key=f"example_question_key_{idx}"):
+        st.session_state.current_question = question  # Set the selected example question
+
 
 # Submit button logic
 if st.button("Ask", type="primary", use_container_width=True):
