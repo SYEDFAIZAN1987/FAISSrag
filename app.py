@@ -317,11 +317,15 @@ if st.button("Ask", type="primary", use_container_width=True, key="ask_button"):
                 # Clear the current question after processing
                 st.session_state.current_question = ''
                 
-                # Rerun app to refresh UI and state
-                st.experimental_rerun()
+                # Update app state to refresh UI
+                st.session_state['force_rerun'] = True  # Trigger UI update
+
             except Exception as e:
                 # Log and display a detailed error message
                 st.error(f"⚠️ An error occurred while processing your query: {str(e)}")
+
+                
+                
 
 # Close the chat input container
 st.markdown("</div>", unsafe_allow_html=True)
