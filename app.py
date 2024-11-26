@@ -128,10 +128,13 @@ def set_example_question(question):
 st.markdown("""
     <div class="header-container">
         <div class="divider"></div>
-        <h1 class="header-text">ALY 6080 Group 1 Report Chat Bot</h1>
-        <p class="header-text" style="font-size: 0.9em;">Built by Syed Faizan Team Lead of Group 1, ALY 6080, Northeastern University</p>
+        <h1 class="header-text">ALY 6080 Group 1 Capstone Project</h1>
+        <p class="header-text" style="font-size: 1.5em; font-weight: bold; color: red;">
+            Built by Syed Faizan, Team Lead of Group 1, ALY 6080, Northeastern University
+        </p>
     </div>
 """, unsafe_allow_html=True)
+
 
 # Display the logo using st.image
 col1, col2, col3 = st.columns([1, 2, 1])
