@@ -144,6 +144,27 @@ with col2:
 with col3:
     st.write("")  # Empty column for spacing
 
+col1, col2, col3, col4, col5, col6 = st.columns(6)
+
+with col1:
+    st.image("images/faizan.jpeg", use_column_width=True, caption="Team Lead: Syed Faizan")
+
+with col2:
+    st.image("images/Christiana.jpeg", use_column_width=True, caption="Christiana")
+
+with col3:
+    st.image("images/Pravalika.jpeg", use_column_width=True, caption="Pravalika")
+
+with col4:
+    st.image("images/VrajShah.jpeg", use_column_width=True, caption="Vraj Shah")
+
+with col5:
+    st.image("images/Emelia.jpeg", use_column_width=True, caption="Emelia Doku")
+
+with col6:
+    st.image("images/Schicheng.jpeg", use_column_width=True, caption="Shicheng Wan")
+
+
 # Introduction text in chat container
 with st.container():
     st.markdown("""
