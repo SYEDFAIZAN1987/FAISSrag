@@ -344,6 +344,46 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# Path to the project report file
+project_report_file = "ALY_6080_Experential_learning_Group_1_Module_12_Capstone_Sponsor_Deliverable.pdf"
+
+# Section Header
+st.markdown("""
+<div class="section">
+    <h3 style="color: #002D62; font-weight: bold;">About Our ALY 6080 Group 1 Project Deliverables</h3>
+</div>
+""", unsafe_allow_html=True)
+
+# Download Button for the Capstone Project Report
+with open(project_report_file, "rb") as file:
+    st.download_button(
+        label="📄 Click here to download our ALY 6080 Capstone Project Report",
+        data=file,
+        file_name="ALY_6080_Experential_learning_Group_1_Module_12_Capstone_Sponsor_Deliverable.pdf",
+        mime="application/pdf"
+    )
+
+# Project Highlights
+st.write("""
+- **Deliverables:** Our deliverables include:
+    - Demographic Analysis
+    - Power BI Dashboards
+    - Jupyter Notebook and R files
+    - GitHub Repository
+    - Detailed Report
+    - This Interactive App
+- **Project Focus:** Our project emphasizes:
+    - Demographics, Housing Stability, and Financial Stability in the Toronto GTA.
+    - The interaction between these three critical domains.
+- **Technologies Used:**
+    - **Machine Learning Predictive Algorithms**
+    - **Python** and **R** for Exploratory Data Analysis (EDA)
+    - **LaTeX** for Report Formulation
+    - **GitHub** and **OpenAI API**
+    - **HTML**, **CSS**, and **Streamlit** for App Development
+""")
+
+
 # Contact Me section
 st.markdown('<div class="section"><h3>Contact the Team Lead Syed Faizan</h3>', unsafe_allow_html=True)
 col1, col2, col3 = st.columns(3)
