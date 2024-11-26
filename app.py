@@ -189,7 +189,7 @@ openai.api_key = openai_api_key
 try:
     embeddings = OpenAIEmbeddings()
     vector_store = FAISS.load_local("db", embeddings, allow_dangerous_deserialization=True)
-    st.success("FAISS vector store loaded successfully!")
+    # st.success("FAISS vector store loaded successfully!")
     # Commented out the warning to suppress it
     # st.warning(
     #     "⚠️ Dangerous deserialization is enabled. Ensure the FAISS index (`db`) is from a trusted source "
