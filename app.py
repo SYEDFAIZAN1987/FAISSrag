@@ -252,23 +252,6 @@ user_query = st.text_input(
     key="user_input"
 )
 
-if st.button("Ask", type="primary", use_container_width=True):
-    if not user_query:
-        st.warning("Please enter a question!")
-    else:
-        st.session_state.chat_history.append({"role": "user", "content": user_query})
-        with st.spinner("🔍 Analyzing sources..."):
-            try:
-                response, sources = rag(user_query)
-                st.session_state.chat_history.append({
-                    "role": "assistant",
-                    "response": response,
-                    "sources": sources
-                })
-                st.rerun()
-            except Exception as e:
-                st.error(f"Sorry, I encountered an error: {str(e)}")
-
 # Query input with examples
 st.markdown("<div class='chat-input'>", unsafe_allow_html=True)
 
@@ -296,9 +279,8 @@ for idx, question in enumerate(example_questions):
     if cols[idx % 2].button(question, key=f"example_question_key_{idx}"):
         st.session_state.current_question = question  # Set the selected example question
 
-
-# Submit button logic
-if st.button("Ask", type="primary", use_container_width=True, key="ask_button"):  # Add unique key
+# Single "Ask" Button Logic
+if st.button("Ask", type="primary", use_container_width=True):  # Ensure only one button
     if not user_query:
         st.warning("⚠️ Please enter a question!")
     else:
@@ -322,16 +304,13 @@ if st.button("Ask", type="primary", use_container_width=True, key="ask_button"):
                 
                 # Update app state to refresh UI
                 st.session_state['force_rerun'] = True  # Trigger UI update
-
             except Exception as e:
                 # Log and display a detailed error message
                 st.error(f"⚠️ An error occurred while processing your query: {str(e)}")
 
-                
-                
-
 # Close the chat input container
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 # Sidebar with information
