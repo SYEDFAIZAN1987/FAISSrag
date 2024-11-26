@@ -61,33 +61,39 @@ docstore = FAISS.from_texts(texts_token_splitted, embedding=embeddings)
 docstore.save_local(faiss_index_path)
 print("Rebuilt and saved FAISS index to local storage.")
 
-# %% Define RAG Query Function
 def rag(query, n_results=5):
-    """Retrieve and generate response based on the query."""
+    """RAG function with multi-source context"""
     try:
-        # Query the FAISS vector store
-        docs = docstore.similarity_search(query, k=n_results)
+        # Retrieve documents from the vector store
+        docs = vector_store.similarity_search(query, k=n_results)
         joined_information = "; ".join([doc.page_content for doc in docs])
 
-        # Prepare conversation with context and query
+        # Construct the messages for the chat completion
         messages = [
             {
                 "role": "system",
-                "content": "You are an expert on socio-economic analysis for the Greater Toronto Area, with specific knowledge from the ALY 6080 Group 1 report. Answer queries using only the provided document context."
+                "content": (
+                    "You are a knowledgeable assistant with expertise in socio-economic data, housing stability, "
+                    "financial trends, and predictive analytics. Provide clear, accurate answers based on provided "
+                    "information and your ALY 6080 Group 1 Project context."
+                )
             },
-            {"role": "user", "content": f"Question: {query}\nContext: {joined_information}"}
+            {"role": "user", "content": f"Question: {query}\nInformation: {joined_information}"}
         ]
 
-        # Generate response using OpenAI
-        model = "gpt-3.5-turbo"
+        # Call the updated ChatCompletion API
         response = openai.ChatCompletion.create(
-            model=model,
-            messages=messages
+            model="gpt-3.5-turbo",
+            messages=messages,
+            temperature=0.7
         )
-        content = response.choices[0].message.content
-        return content
+
+        # Extract the response content
+        return response['choices'][0]['message']['content'], docs
+
     except Exception as e:
-        return f"Error generating response: {str(e)}"
+        raise Exception(f"Error generating response: {str(e)}")
+
 
 # %% Example Query
 query = "What are the key findings regarding financial stability in the Greater Toronto Area?"
