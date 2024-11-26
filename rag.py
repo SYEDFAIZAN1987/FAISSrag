@@ -7,13 +7,15 @@ from pypdf import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter, SentenceTransformersTokenTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OpenAIEmbeddings
-import openai
+from openai import OpenAI
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Ensure the OpenAI API key is set
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Initialize the OpenAI client
+client = OpenAI(
+    api_key=os.environ['OPENAI_API_KEY']  # Optional, as this is the default behavior
+)
 
 # %% Load the PDF file
 project_report_file = "ALY_6080_Experential_learning_Group_1_Module_12_Capstone_Sponsor_Deliverable.pdf"
@@ -81,15 +83,18 @@ def rag(query, n_results=5):
             {"role": "user", "content": f"Question: {query}\nInformation: {joined_information}"}
         ]
 
-        # Call the updated ChatCompletion API
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            temperature=0.7
-        )
+       # Making a chat completion request with the new client
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are an assistant."},
+        {"role": "user", "content": "Hello, how are you?"}
+    ],
+    temperature=0.7
+)
 
-        # Extract the response content
-        return response['choices'][0]['message']['content'], docs
+# Accessing the response
+answer = response['choices'][0]['message']['content']
 
     except Exception as e:
         raise Exception(f"Error generating response: {str(e)}")
