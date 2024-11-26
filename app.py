@@ -243,18 +243,6 @@ with chat_container:
                 </div>
             """, unsafe_allow_html=True)
 
-# Query input with examples
-user_query = st.text_input(
-    label="Ask your question about the ALY 6080 project",
-    help="Type your question or click an example below",
-    placeholder="Example: What are the key trends in housing stability?",
-    value=st.session_state.current_question,
-    key="user_input"
-)
-
-# Query input with examples
-st.markdown("<div class='chat-input'>", unsafe_allow_html=True)
-
 # If there's a current question in the session state, use it as the default value
 user_query = st.text_input(
     label="Ask your question about the ALY 6080 project",
@@ -263,6 +251,10 @@ user_query = st.text_input(
     value=st.session_state.current_question,
     key="unique_user_input_key"  # Assign a unique key
 )
+
+# Query input with examples
+st.markdown("<div class='chat-input'>", unsafe_allow_html=True)
+
 
 # Example questions as buttons
 example_questions = [
