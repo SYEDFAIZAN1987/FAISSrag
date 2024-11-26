@@ -8,6 +8,10 @@ from langchain.embeddings import OpenAIEmbeddings
 
 import openai
 from datetime import datetime
+import warnings  # Import warnings here
+
+# Suppress the deserialization warning
+warnings.filterwarnings("ignore", message=".*dangerous deserialization.*")
 
 # Page configuration
 st.set_page_config(
