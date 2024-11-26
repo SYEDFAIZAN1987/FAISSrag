@@ -8,10 +8,7 @@ from langchain.embeddings import OpenAIEmbeddings
 
 import openai
 from datetime import datetime
-import warnings  # Import warnings here
 
-# Suppress the deserialization warning
-warnings.filterwarnings("ignore", message=".*dangerous deserialization.*")
 
 # Page configuration
 st.set_page_config(
@@ -193,13 +190,15 @@ try:
     embeddings = OpenAIEmbeddings()
     vector_store = FAISS.load_local("db", embeddings, allow_dangerous_deserialization=True)
     st.success("FAISS vector store loaded successfully!")
-    st.warning(
-        "⚠️ Dangerous deserialization is enabled. Ensure the FAISS index (`db`) is from a trusted source "
-        "to avoid potential security risks."
-    )
+    # Commented out the warning to suppress it
+    # st.warning(
+    #     "⚠️ Dangerous deserialization is enabled. Ensure the FAISS index (`db`) is from a trusted source "
+    #     "to avoid potential security risks."
+    # )
 except Exception as e:
     st.error(f"⚠️ Error connecting to the database: {str(e)}")
     st.stop()
+
 
 def rag(query, n_results=5):
     """RAG function with multi-source context"""
