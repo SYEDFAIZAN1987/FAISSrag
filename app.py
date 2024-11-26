@@ -274,27 +274,37 @@ for idx, question in enumerate(example_questions):
 
 
 # Submit button logic
-if st.button("Ask", type="primary", use_container_width=True):
+if st.button("Ask", type="primary", use_container_width=True, key="ask_button"):  # Add unique key
     if not user_query:
-        st.warning("Please enter a question!")
+        st.warning("⚠️ Please enter a question!")
     else:
+        # Append user's query to chat history
         st.session_state.chat_history.append({"role": "user", "content": user_query})
         
         with st.spinner("🔍 Analyzing sources..."):
             try:
+                # Call the RAG function and get response and sources
                 response, sources = rag(user_query)
+                
+                # Append assistant's response to chat history
                 st.session_state.chat_history.append({
                     "role": "assistant",
                     "response": response,
                     "sources": sources
                 })
-                # Clear the current question after submission
+                
+                # Clear the current question after processing
                 st.session_state.current_question = ''
-                st.rerun()
+                
+                # Rerun app to refresh UI and state
+                st.experimental_rerun()
             except Exception as e:
-                st.error(f"Sorry, I encountered an error: {str(e)}")
+                # Log and display a detailed error message
+                st.error(f"⚠️ An error occurred while processing your query: {str(e)}")
 
+# Close the chat input container
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 # Sidebar with information
 with st.sidebar:
